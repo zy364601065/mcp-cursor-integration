@@ -25,7 +25,7 @@
 
 ## 📖 使用案例
 
-### 1. Figma Desktop MCP
+### 1. 🎨 Figma Desktop MCP
 
 #### 官方文档
 - [Figma MCP 设置指南](https://help.figma.com/hc/en-us/articles/35281186390679-Figma-MCP-collection-How-to-setup-the-Figma-desktop-MCP-server)
@@ -62,7 +62,7 @@
 
 ---
 
-### 2. Postman MCP
+### 2. 🚀 Postman MCP
 
 #### MCP 配置
 
@@ -99,7 +99,7 @@
 
 ---
 
-### 3. GitHub MCP
+### 3. 🐙 GitHub MCP
 
 #### 官方文档
 - [GitHub MCP Server](https://github.com/github/github-mcp-server?tab=readme-ov-file)
@@ -144,7 +144,7 @@
 
 ---
 
-### 4. IDA Pro MCP
+### 4. 🔍 IDA Pro MCP
 
 #### 官方文档
 - [IDA Pro MCP](https://github.com/mrexodia/ida-pro-mcp)
