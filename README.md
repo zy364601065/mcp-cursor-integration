@@ -2,53 +2,63 @@
 
 > 这是一个关于 MCP (Model Context Protocol) 与 Cursor 编辑器集成的完整文档和配置示例项目。
 
+# 什么是MCP
+[Model Context Protocol（MCP）](https://modelcontextprotocol.io/docs/getting-started/intro) 让 Cursor 可以连接到外部工具和数据源
+
 ## 📚 文档导航
 
-- **[完整文档](./MCP-Cursor-Integration.md)** - 详细的配置和使用指南
-- **[快速开始](./README-MCP.md)** - 快速配置步骤
-- **[GitHub 设置指南](./GITHUB-SETUP.md)** - 如何创建 GitHub 仓库
-- **[项目总结](./PROJECT-SUMMARY.md)** - 项目文件说明
+- **[完整文档](https://cursor.com/cn/docs/context/mcp#mcp)** - 详细的信息和使用指南
 
 ## 🚀 快速开始
 
 ### 1. 配置 MCP 服务器
+1.打开 Cursor → Settings → Cursor Settings.
+2.找到 Tool & MCP.
+3.新增 New MCP server.
 
-编辑 Cursor 的 MCP 配置文件（通常位于 `~/.cursor/mcp.json` 或 `~/.config/cursor/mcp.json`）：
+## 使用案例
+### 1. figma
+官方文档
+https://help.figma.com/hc/en-us/articles/35281186390679-Figma-MCP-collection-How-to-setup-the-Figma-desktop-MCP-server
+https://developers.figma.com/docs/figma-mcp-server/local-server-installation/
+视频教程 
+https://www.youtube.com/watch?v=nPnkMPabCfI
 
-```json
-{
-  "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-github"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_token_here"
+mcp
+"figma-desktop": {
+       "url": "http://127.0.0.1:3845/mcp"
+     }
+新增如何跟cursor使用
+.....
+
+### 2. postman
+mcp
+"Postman": {
+      "url": "https://mcp.postman.com/minimal",
+      "headers": {
+        "Authorization": "Bearer your_postman_api_key_here"
       }
-    }
-  }
-}
-```
+    },
+新增如何跟cursor使用
+.....
 
-更多配置示例请查看 [mcp-config-example.json](./mcp-config-example.json)
+### 3. gitHub
+文档 https://github.com/github/github-mcp-server?tab=readme-ov-file
+mcp
+"GitHub": {
+      "command": "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      },
+      "args": []
+    },
+新增如何跟cursor使用
+.....
 
-### 2. 重启 Cursor
-
-配置完成后重启 Cursor 以使配置生效。
-
-## 📦 包含的内容
-
-- ✅ 完整的 MCP 与 Cursor 集成文档
-- ✅ 多个 MCP 服务器配置示例（GitHub、Postman、IDA Pro 等）
-- ✅ 使用场景和最佳实践
-- ✅ 常见问题解答
-
-## 🔧 支持的 MCP 服务器
-
-- **GitHub** - 管理 GitHub 仓库、Issues、Pull Requests
-- **Postman** - 管理 API 集合和环境
-- **IDA Pro** - 二进制文件分析
-- **文件系统** - 文件操作和管理
-- **数据库** - 数据库查询和管理
+### 4. ida
+根据文档  https://github.com/mrexodia/ida-pro-mcp 安装需要的mcp
+新增如何跟cursor使用
+.....
 
 ## 📖 详细文档
 
