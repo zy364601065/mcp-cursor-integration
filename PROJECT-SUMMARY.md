@@ -93,5 +93,5 @@ git commit -m "Add MCP and Cursor integration documentation"
 
 ---
 
-**创建时间**: 2024年1月  
-**最后更新**: 2024年1月
+**创建时间**: 2026年2月11日  
+**最后更新**: 2026年2月11日
