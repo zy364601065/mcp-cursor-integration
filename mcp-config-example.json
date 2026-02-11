@@ -1,39 +1,27 @@
 {
   "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
+    "figma-desktop": {
+      "url": "http://127.0.0.1:3845/mcp"
+    },
+    "GitHub": {
+      "command": "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      },
+      "args": []
+    },
+    "Postman": {
+      "url": "https://mcp.postman.com/minimal",
+      "headers": {
+        "Authorization": "Bearer your_postman_api_key_here"
       }
     },
-    "postman": {
-      "command": "npx",
+    "ida-pro-mcp": {
+      "command": "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/bin/python3",
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-postman"
-      ],
-      "env": {
-        "POSTMAN_API_KEY": "your_postman_api_key_here"
-      }
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem"
-      ],
-      "env": {
-        "ALLOWED_DIRECTORIES": "/Users/your_username/projects"
-      }
-    },
-    "ida-pro": {
-      "command": "python",
-      "args": [
-        "/path/to/ida-pro-mcp/server.py"
+        "/opt/homebrew/lib/python3.11/site-packages/ida_pro_mcp/server.py",
+        "--ida-rpc",
+        "http://127.0.0.1:13337"
       ]
     }
   }

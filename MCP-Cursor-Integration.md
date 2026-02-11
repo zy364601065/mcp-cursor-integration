@@ -72,30 +72,28 @@
 ```json
 {
   "mcpServers": {
-    "github": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-github"
-      ],
+    "figma-desktop": {
+      "url": "http://127.0.0.1:3845/mcp"
+    },
+    "GitHub": {
+      "command": "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
       "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_token_here"
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      },
+      "args": []
+    },
+    "Postman": {
+      "url": "https://mcp.postman.com/minimal",
+      "headers": {
+        "Authorization": "Bearer your_postman_api_key_here"
       }
     },
-    "postman": {
-      "command": "npx",
+    "ida-pro-mcp": {
+      "command": "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/bin/python3",
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-postman"
-      ],
-      "env": {
-        "POSTMAN_API_KEY": "your_api_key_here"
-      }
-    },
-    "ida-pro": {
-      "command": "python",
-      "args": [
-        "/path/to/ida-pro-mcp/server.py"
+        "/opt/homebrew/lib/python3.11/site-packages/ida_pro_mcp/server.py",
+        "--ida-rpc",
+        "http://127.0.0.1:13337"
       ]
     }
   }
@@ -110,7 +108,32 @@
 
 ## 可用的 MCP 服务器
 
-### 1. GitHub MCP Server
+### 1. Figma Desktop MCP Server
+
+**功能**:
+- 访问 Figma 设计文件
+- 获取设计资源和组件信息
+- 读取设计规范和样式
+- 与 Figma 桌面应用交互
+
+**配置**:
+```json
+{
+  "mcpServers": {
+    "figma-desktop": {
+      "url": "http://127.0.0.1:3845/mcp"
+    }
+  }
+}
+```
+
+**使用示例**:
+- "获取当前打开的 Figma 文件信息"
+- "列出设计文件中的所有组件"
+- "读取某个设计元素的样式属性"
+- "导出设计资源"
+
+### 2. GitHub MCP Server
 
 **功能**:
 - 搜索和管理 GitHub 仓库
@@ -121,11 +144,13 @@
 **配置**:
 ```json
 {
-  "github": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-github"],
-    "env": {
-      "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_xxxxxxxxxxxx"
+  "mcpServers": {
+    "GitHub": {
+      "command": "docker run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN ghcr.io/github/github-mcp-server",
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      },
+      "args": []
     }
   }
 }
@@ -135,8 +160,10 @@
 - "搜索包含 'react' 的仓库"
 - "在仓库中创建一个新的 issue"
 - "列出所有打开的 pull requests"
+- "获取仓库的 README 内容"
+- "创建新的分支并推送代码"
 
-### 2. Postman MCP Server
+### 3. Postman MCP Server
 
 **功能**:
 - 管理 Postman 集合
@@ -147,11 +174,12 @@
 **配置**:
 ```json
 {
-  "postman": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-postman"],
-    "env": {
-      "POSTMAN_API_KEY": "PMAK-xxxxxxxxxxxx"
+  "mcpServers": {
+    "Postman": {
+      "url": "https://mcp.postman.com/minimal",
+      "headers": {
+        "Authorization": "Bearer your_postman_api_key_here"
+      }
     }
   }
 }
@@ -161,8 +189,10 @@
 - "创建一个新的 Postman 集合"
 - "运行集合中的所有请求"
 - "更新环境变量"
+- "获取 API 请求的响应结果"
+- "导出集合为 OpenAPI 规范"
 
-### 3. IDA Pro MCP Server
+### 4. IDA Pro MCP Server
 
 **功能**:
 - 反汇编和分析二进制文件
@@ -173,9 +203,15 @@
 **配置**:
 ```json
 {
-  "ida-pro": {
-    "command": "python",
-    "args": ["/path/to/ida-pro-mcp/server.py"]
+  "mcpServers": {
+    "ida-pro-mcp": {
+      "command": "/opt/homebrew/Cellar/python@3.11/3.11.6_1/Frameworks/Python.framework/Versions/3.11/bin/python3",
+      "args": [
+        "/opt/homebrew/lib/python3.11/site-packages/ida_pro_mcp/server.py",
+        "--ida-rpc",
+        "http://127.0.0.1:13337"
+      ]
+    }
   }
 }
 ```
@@ -184,89 +220,109 @@
 - "列出所有函数"
 - "反汇编指定地址的代码"
 - "查找字符串引用"
-
-### 4. 文件系统 MCP Server
-
-**功能**:
-- 读取和写入文件
-- 列出目录内容
-- 搜索文件
-- 文件操作（复制、移动、删除）
-
-**配置**:
-```json
-{
-  "filesystem": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-filesystem"],
-    "env": {
-      "ALLOWED_DIRECTORIES": "/path/to/allowed/directory"
-    }
-  }
-}
-```
-
-### 5. 数据库 MCP Server
-
-**功能**:
-- 执行 SQL 查询
-- 管理数据库连接
-- 查看表结构和数据
-- 执行数据库操作
-
-**配置**:
-```json
-{
-  "database": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-database"],
-    "env": {
-      "DATABASE_URL": "postgresql://user:password@localhost/dbname"
-    }
-  }
-}
-```
+- "分析函数的调用关系"
+- "读取指定地址的内存内容"
 
 ---
 
 ## 使用示例
 
-### 示例 1: 使用 GitHub MCP 创建 Issue
+### 示例 1: 使用 Figma Desktop MCP 获取设计信息
+
+**场景**: 开发者需要从 Figma 设计中获取颜色和字体信息
 
 ```
-用户: "在 my-repo 仓库中创建一个新的 issue，标题是 '修复登录bug'，描述是 '用户无法正常登录系统'"
+用户: "获取当前 Figma 文件中使用的所有颜色值"
 
 Cursor (通过 MCP): 
-1. 连接到 GitHub MCP 服务器
-2. 搜索仓库 "my-repo"
-3. 创建新的 issue，包含标题和描述
-4. 返回 issue 链接
+1. 连接到 Figma Desktop MCP 服务器 (http://127.0.0.1:3845/mcp)
+2. 获取当前打开的 Figma 文件
+3. 遍历所有设计元素，提取颜色信息
+4. 返回颜色列表，包含 HEX 和 RGB 值
+5. 生成可直接在代码中使用的颜色常量
 ```
 
-### 示例 2: 使用 Postman MCP 测试 API
+**实际应用**:
+- 从设计稿中提取设计令牌（Design Tokens）
+- 自动生成 CSS 变量或主题配置
+- 同步设计系统中的颜色和字体
+
+---
+
+### 示例 2: 使用 GitHub MCP 创建 Issue
+
+**场景**: 在开发过程中发现 bug，需要创建 GitHub Issue
 
 ```
-用户: "在 Postman 中运行 '用户认证' 集合"
+用户: "在 mcp-cursor-integration 仓库中创建一个新的 issue，标题是 '修复文档中的日期错误'，描述是 '文档中的创建日期需要更新为当前日期'"
+
+Cursor (通过 MCP): 
+1. 连接到 GitHub MCP 服务器（通过 Docker 容器）
+2. 使用 Personal Access Token 进行认证
+3. 搜索仓库 "zy364601065/mcp-cursor-integration"
+4. 创建新的 issue，包含标题和描述
+5. 返回 issue 链接: https://github.com/zy364601065/mcp-cursor-integration/issues/1
+```
+
+**实际应用**:
+- 自动创建 bug 报告
+- 从代码注释生成 issue
+- 批量管理项目任务
+
+---
+
+### 示例 3: 使用 Postman MCP 测试 API
+
+**场景**: 需要测试新开发的 API 端点
+
+```
+用户: "在 Postman 中运行 '用户认证 API' 集合，并显示所有失败的请求"
 
 Cursor (通过 MCP):
-1. 连接到 Postman MCP 服务器
-2. 查找名为 '用户认证' 的集合
-3. 执行集合中的所有请求
-4. 返回测试结果
+1. 连接到 Postman MCP 服务器 (https://mcp.postman.com/minimal)
+2. 使用 Bearer Token 进行认证
+3. 查找名为 '用户认证 API' 的集合
+4. 执行集合中的所有请求
+5. 分析响应结果，识别失败的请求
+6. 返回详细的测试报告，包含：
+   - 成功/失败的请求数量
+   - 每个请求的响应状态码
+   - 错误信息和堆栈跟踪
 ```
 
-### 示例 3: 使用 IDA Pro MCP 分析二进制
+**实际应用**:
+- 自动化 API 测试流程
+- CI/CD 集成测试
+- API 健康检查
+- 性能监控
+
+---
+
+### 示例 4: 使用 IDA Pro MCP 分析二进制文件
+
+**场景**: 逆向工程师需要分析恶意软件的行为
 
 ```
-用户: "分析二进制文件中的 main 函数"
+用户: "分析二进制文件中的 main 函数，找出它调用的所有网络相关函数"
 
 Cursor (通过 MCP):
-1. 连接到 IDA Pro MCP 服务器
-2. 查找 main 函数
-3. 反汇编函数代码
-4. 分析函数逻辑和调用关系
-5. 返回分析结果
+1. 连接到 IDA Pro MCP 服务器（通过 Python 脚本）
+2. 连接到 IDA Pro RPC 服务 (http://127.0.0.1:13337)
+3. 查找 main 函数地址
+4. 反汇编 main 函数代码
+5. 分析函数调用图，找出所有网络相关的函数调用（如 socket, connect, send, recv）
+6. 返回分析结果，包含：
+   - main 函数的完整反汇编代码
+   - 调用关系图
+   - 网络相关函数的地址和参数
+   - 潜在的安全风险提示
 ```
+
+**实际应用**:
+- 恶意软件分析
+- 漏洞研究
+- 代码审计
+- 二进制文件逆向工程
 
 ---
 
