@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+      }
+    },
+    "postman": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postman"
+      ],
+      "env": {
+        "POSTMAN_API_KEY": "your_postman_api_key_here"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem"
+      ],
+      "env": {
+        "ALLOWED_DIRECTORIES": "/Users/your_username/projects"
+      }
+    },
+    "ida-pro": {
+      "command": "python",
+      "args": [
+        "/path/to/ida-pro-mcp/server.py"
+      ]
+    }
+  }
+}
